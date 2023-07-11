@@ -1,5 +1,8 @@
 {
   "expo": {
+    "updates": {
+      "useClassicUpdates": true
+    },
     "name": "GatherApp",
     "slug": "GatherApp",
     "version": "1.0.0",
