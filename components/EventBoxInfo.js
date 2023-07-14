@@ -43,13 +43,13 @@ const EventBoxInfo = ({ visible, onClose, event }) => {
         // setContentOffset(scrollPosition);
         const screenHeight = layoutMeasurement.height;
         const ekran20 = screenHeight * 0.2;
-        console.log(contentOffset.y)
+        // console.log(contentOffset.y)
         if (scrollPosition > 15) {
-            console.log('%50 SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
+            // console.log('%50 SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
             setIsScrolledUp(true);
         }
         if (scrollPosition < -85) {
-            console.log('!!!!!!!! ASAGI SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
+            // console.log('!!!!!!!! ASAGI SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
             setIsScrolledUp(false);
         }
 

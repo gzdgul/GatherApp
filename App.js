@@ -12,6 +12,8 @@ import Notifications from "./screens/Notifications";
 import Tickets from "./screens/Tickets";
 import {COLORS} from "./config/constants";
 import * as Font from 'expo-font';
+import SignUpScreen from "./screens/SignUpScreen";
+import LoginScreen from "./screens/LoginScreen";
 const MainStack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 function CustomTabBarIcon({ source, focused }) {
@@ -119,8 +121,9 @@ export default function App() {
       <NavigationContainer>
           <StatusBar style="light" />
         <MainStack.Navigator screenOptions={{headerShown: false}}>
+            <MainStack.Screen name="LogIn" component={LoginScreen} />
+            <MainStack.Screen name="SignUp" component={SignUpScreen} />
           <MainStack.Screen name="Tabs" component={TabsScreen} />
-
         </MainStack.Navigator>
       </NavigationContainer>
 

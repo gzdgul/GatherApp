@@ -11,6 +11,7 @@ const EventBoxLargeLabel = ({selectedEvent, eventId, event}) => {
                 // backgroundColor: selectedEvent === id ? 'white' : 'green',
                 top: selectedEvent === eventId ? 35: 0,
                 left: selectedEvent === eventId ? 50: 0,
+                scale: selectedEvent === eventId ? 1: 0.95,
 
                 // blurRadius: selectedEvent === id ? 10 : 0,
             }}

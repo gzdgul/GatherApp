@@ -3,10 +3,17 @@ import { StatusBar } from 'expo-status-bar';
 import {View, Text, StyleSheet, TextInput, Image, ScrollView, TouchableOpacity} from "react-native";
 import {COLORS} from "../config/constants";
 import * as Font from "expo-font";
-import EventBoxLarge from "../components/EventBoxLarge/EventBoxLarge";
 
-const Home = () => {
+import EventBoxLarge from "../components/EventBoxLarge/EventBoxLarge";
+import useCurrentUser from "../stores/useCurrentUser";
+
+const Home = ({navigation}) => {
     const [text, setText] = React.useState('');
+    const currentUser = useCurrentUser((state) => state.currentUser);
+
+    React.useEffect(() => {
+        console.log('currentUser', currentUser)
+    },[currentUser])
     const events = [
         {
             label: 'Sanat Festivali',
@@ -89,6 +96,7 @@ const Home = () => {
                     />
                 </View>
                 <Text style={styles.bannerText}>Home</Text>
+                <Text style={styles.bannerText}>{currentUser.name}</Text>
                 <View style={styles.settings}>
                     <Image
                         source={require('../assets/dotsIcon.png')}
