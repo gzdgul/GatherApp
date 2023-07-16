@@ -4,14 +4,23 @@ import {Image, StyleSheet, TouchableOpacity} from "react-native";
 import useEvents from "../stores/useEvents";
 import {COLORS} from "../config/constants";
 
-const LikeButton = ({event}) => {
+const LikeButton = ({event, page, setDeleteAnimation}) => {
     const setLikedEventsLocal = useEvents((state) => state.setLikedEvents);
     const likedEventsLocal = useEvents((state) => state.liked);
     const handleEventLike = () => {
         if (likedEventsLocal.includes(event.eventId)) {
             const newArr = [...(likedEventsLocal.filter((x) => x !== event.eventId))]
-            setLikedEventsLocal(newArr);
-            setLikedEvents(newArr);
+            if (page === 'likes') {
+                setDeleteAnimation(true)
+                setTimeout(() => {
+                    setLikedEventsLocal(newArr);
+                    setLikedEvents(newArr);
+                },300)
+            }else {
+                setLikedEventsLocal(newArr);
+                setLikedEvents(newArr);
+            }
+
         }else {
             const newArr = [event.eventId, ...likedEventsLocal]
             setLikedEventsLocal(newArr);

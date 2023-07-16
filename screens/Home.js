@@ -76,7 +76,7 @@ const Home = ({navigation}) => {
                        ?
                        [...events].reverse().map((event,index) => {
                            return  <EventBoxLarge
-                               key={index}
+                               key={event.eventId}
                                id={index +1}
                                event={event}
                                page={'home'}

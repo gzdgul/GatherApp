@@ -7,6 +7,8 @@ import EventBoxLarge from "../components/EventBoxLarge/EventBoxLarge";
 import useEvents from "../stores/useEvents";
 import PageLabel from "../components/PageLabel";
 import useSelectedEvent from "../stores/useSelectedEvent";
+import { View as MotiViews } from 'moti';
+
 
 const Likes = () => {
     const events = useEvents((state) => state.events);
@@ -57,11 +59,18 @@ const Likes = () => {
                 <View>
                     <PageLabel text={'Liked Events'} number={likedEventsArray.length} isScrolledUp={isScrolledUp}/>
                 </View>
-                <View style={[styles.eventsContainer,
-                    selectedEventLikesPage
-                        ? { height: likedEventsArray?.length * 90 + 360}
-                        : { height: likedEventsArray?.length * 90 + 200}
-                ]}>
+                <MotiViews
+                    transition={{ delay: 0, damping: 12, mass: 0.5 }}
+                    animate={{
+                        height: selectedEventLikesPage
+                            ? likedEventsArray?.length * 90 + 460
+                            : likedEventsArray?.length * 90 + 200,
+                    }}
+                    exitTransition={{
+                        type: 'timing',
+                        duration: 300,
+                    }}
+                    style={styles.eventsContainer}>
                     { likedEventsArray.length > 0
                         ?
                         [...likedEventsArray].map((event,index) => {
@@ -86,7 +95,7 @@ const Likes = () => {
                             <Text style={{color: COLORS.stone}}>Opss... there are no events you like</Text>
                         </View>
                     }
-                </View>
+                </MotiViews>
             </ScrollView>
         </View>
     );

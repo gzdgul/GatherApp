@@ -21,12 +21,9 @@ const EventBoxLarge = ({id, event, page, selectedEvent, setSelectedEvent}) => {
 
     const [isModalVisible, setModalVisible] = React.useState(false);
     const [imageLoaded, setImageLoaded] = React.useState(false);
+    const [deleteAnimation, setDeleteAnimation] = React.useState(false);
     // const [selectedEvent, setSelectedEvent] = React.useState(null);
-    if (page === 'home') {}
 
-    useEffect(() => {
-
-    },[])
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
@@ -47,7 +44,7 @@ const EventBoxLarge = ({id, event, page, selectedEvent, setSelectedEvent}) => {
                     <MotiViews
                         transition={{ delay: 0, damping: 12, mass: 0.5 }}
                         animate={{
-                            opacity: selectedEvent === id ? 1 : 1,
+                            opacity: deleteAnimation ? 0 : 1,
                             height: selectedEvent === id ? 250 : 180,
                             top: page === 'home'
                                 ? (selectedEvent && selectedEvent < id ) ? 175 * id + 80 : 175 * id
@@ -76,7 +73,7 @@ const EventBoxLarge = ({id, event, page, selectedEvent, setSelectedEvent}) => {
                             <View style={styles.labelContainer}>
                                 <EventBoxLargeLabel selectedEvent={selectedEvent} eventId={id} event={event}/>
                                 <View style={styles.detailsContainer}>
-                                    <LikeButton event={event}/>
+                                    <LikeButton event={event} page={page} setDeleteAnimation={setDeleteAnimation}/>
                                     <TouchableOpacity style={styles.detailsButton} onPress={toggleModal}>
                                         <Image
                                             source={require('../../assets/fourDotsIcon.png')}
@@ -100,7 +97,7 @@ const EventBoxLarge = ({id, event, page, selectedEvent, setSelectedEvent}) => {
 
                         </MotiViews>
 
-                        <EventBoxInfo visible={isModalVisible} onClose={toggleModal} event={event}/>
+                        <EventBoxInfo visible={isModalVisible} onClose={toggleModal} event={event} page={page}/>
 
                             <MotiViews
                                 transition={{ delay: 0, damping: 12, mass: 0.5 }}

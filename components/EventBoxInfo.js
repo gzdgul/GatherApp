@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
     RefreshControl,
     ScrollView,
@@ -20,13 +20,21 @@ import useEvents from "../stores/useEvents";
 import {setLikedEvents} from "../firebase";
 import LikeButton from "./LikeButton";
 
-const EventBoxInfo = ({ visible, onClose, event }) => {
+const EventBoxInfo = ({ visible, onClose, event, page }) => {
 
     const [isScrolledUp, setIsScrolledUp] = React.useState(false);
     const [contentOffset, setContentOffset] = React.useState(null);
     const [refreshing, setRefreshing] = React.useState(false);
     const setLikedEventsLocal = useEvents((state) => state.setLikedEvents);
     const likedEventsLocal = useEvents((state) => state.liked);
+    const [deleteAnimation, setDeleteAnimation] = React.useState(false);
+
+    useEffect(() => {
+        if (deleteAnimation) {
+            onClose()
+        }
+    },[deleteAnimation])
+
 
     const handleEventLike = () => {
         if (likedEventsLocal.includes(event.eventId)) {
@@ -122,7 +130,7 @@ const EventBoxInfo = ({ visible, onClose, event }) => {
                             <Text style={styles.labelText}>
                                 {event.label}
                             </Text>
-                           <LikeButton event={event}/>
+                           <LikeButton event={event} page={page} setDeleteAnimation={setDeleteAnimation}/>
                         </View>
                          <View style={styles.contentContainer}>
                         <EventBoxLargeInfoPin text={event.day + ' GÜN'}/>
