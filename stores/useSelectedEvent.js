@@ -1,10 +1,16 @@
 import {create} from 'zustand'
 
 const useSelectedEvent = create((set) => ({
-    selectedEvent: null,
-    setSelectedEvent: (x) => {
+    selectedEventHomePage: null,
+    setSelectedEventHomePage: (x) => {
         set((state) => ({
-            selectedEvent: x
+            selectedEventHomePage: x
+        }))
+    },
+    selectedEventLikesPage: null,
+    setSelectedEventLikesPage: (x) => {
+        set((state) => ({
+            selectedEventLikesPage: x
         }))
     }
 }));

@@ -10,12 +10,15 @@ import {addNewEvent} from "../firebase";
 import useEvents from "../stores/useEvents";
 import Banner from "../components/Banner";
 import {View as MotiViews} from "moti/build/components/view";
+import PageLabel from "../components/PageLabel";
+import useSelectedEvent from "../stores/useSelectedEvent";
 
 const Home = ({navigation}) => {
     const currentUser = useCurrentUser((state) => state.currentUser);
     const events = useEvents((state) => state.events);
     const [isScrolledUp, setIsScrolledUp] = React.useState(false);
-    const bosEvents = [];
+    const setSelectedEventHomePage = useSelectedEvent((state) => state.setSelectedEventHomePage);
+    const selectedEventHomePage = useSelectedEvent((state) => state.selectedEventHomePage);
 
 
     React.useEffect(() => {
@@ -58,62 +61,14 @@ const Home = ({navigation}) => {
        <View style={styles.container}>
             <Banner scrolledUp={isScrolledUp}/>
 
-           <ScrollView style={{ width: '100%', borderRadius: 50}}
+           <ScrollView style={{ width: '100%', marginTop: -20}}
                        scrollEnabled={events.length > 0}
                        onScroll={handleScroll}
                        scrollEventThrottle={16}
                        stickyHeaderIndices={[0]}
            >
                 <View>
-                    <View  style={styles.labelContainer}>
-                        <MotiViews
-                            transition={{ delay: 10, damping: 20, mass: 0.8 }}
-                            animate={{
-                                top: isScrolledUp ? -35: 0,
-                                left: isScrolledUp ? -30: 0,
-                                scale: isScrolledUp ? 0.8: 1,
-                                paddingRight: isScrolledUp ? 25: 16,
-                                paddingLeft: isScrolledUp ? 20: 20,
-                                paddingTop: isScrolledUp ? 40: 10,
-                                borderTopRightRadius: isScrolledUp ? 0 : 30,
-                                paddingVertical: isScrolledUp ? 10 : 8,
-                            }}
-
-                            exitTransition={{
-                                type: 'timing',
-                                duration: 150,
-                            }}
-                            style={styles.labelTextContainer}
-                        >
-                            <Text style={styles.labelText}>Upcoming Events</Text>
-                        </MotiViews>
-                        <MotiViews
-                            transition={{ delay: 10, damping: 20, mass: 0.8 }}
-                            animate={{
-                                opacity: isScrolledUp ? 0 : 1,
-                                // top: isScrolledUp ? -35: 0,
-                                // right: isScrolledUp ? -10: 0,
-                                // scale: isScrolledUp ? 0.8: 1,
-                                // paddingLeft: isScrolledUp ? 50: 20,
-                                // paddingRight: isScrolledUp ? 40: 15,
-                                // paddingTop: isScrolledUp ? 50: 10,
-                                paddingVertical: 10,
-                                paddingHorizontal: 20,
-                                borderTopLeftRadius: 50,
-                                // paddingVertical: isScrolledUp ? 20 : 8,
-                            }}
-
-                            exitTransition={{
-                                type: 'timing',
-                                duration: 10,
-                            }}
-                            style={styles.eventNumber}
-                        >
-                            <Text style={styles.eventNumberText}>{events?.length}</Text>
-                        </MotiViews>
-
-                    </View>
-
+                   <PageLabel text={'Upcoming Events'} number={events?.length} isScrolledUp={isScrolledUp}/>
                 </View>
 
                <View style={[styles.eventsContainer, { height: events?.length * 175 + 380}]}>
@@ -125,6 +80,8 @@ const Home = ({navigation}) => {
                                id={index +1}
                                event={event}
                                page={'home'}
+                               selectedEvent={selectedEventHomePage}
+                               setSelectedEvent={setSelectedEventHomePage}
                            />
                        })
                        : <View style={styles.noEventContainer}>

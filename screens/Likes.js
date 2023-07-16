@@ -5,11 +5,36 @@ import Banner from "../components/Banner";
 import {COLORS} from "../config/constants";
 import EventBoxLarge from "../components/EventBoxLarge/EventBoxLarge";
 import useEvents from "../stores/useEvents";
+import PageLabel from "../components/PageLabel";
+import useSelectedEvent from "../stores/useSelectedEvent";
 
 const Likes = () => {
     const events = useEvents((state) => state.events);
     const likedEventsIdArrLocal = useEvents((state) => state.liked);
     const [likedEventsArray, setLikedEventsArray] = useState([])
+    const [isScrolledUp, setIsScrolledUp] = React.useState(false);
+    const setSelectedEventLikesPage = useSelectedEvent((state) => state.setSelectedEventLikesPage);
+    const selectedEventLikesPage = useSelectedEvent((state) => state.selectedEventLikesPage);
+
+
+    const handleScroll = (event) => {
+        const { contentOffset, layoutMeasurement } = event.nativeEvent;
+        const scrollPosition = contentOffset.y;
+        // setContentOffset(scrollPosition);
+        const screenHeight = layoutMeasurement.height;
+        const ekran20 = screenHeight * 0.2;
+        // console.log(contentOffset.y)
+        if (scrollPosition > 45 && likedEventsArray.length > 3) {
+            console.log('%50 SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
+            setIsScrolledUp(true);
+        }
+        if (scrollPosition <= 0) {
+            console.log('!!!!!!!! ASAGI SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
+            setIsScrolledUp(false);
+        }
+
+
+    };
 
     useEffect(() => {
         if (events.length > 0) {
@@ -23,23 +48,30 @@ const Likes = () => {
 
     return (
         <View style={styles.container}>
-            <Banner/>
-            <View style={styles.labelContainer}>
-                <Text style={styles.labelText}>Liked Events</Text>
-                <View style={styles.eventNumber}>
-                    <Text style={styles.eventNumberText}>{likedEventsArray?.length}</Text>
+            <Banner scrolledUp={isScrolledUp}/>
+            <ScrollView
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
+                stickyHeaderIndices={[0]}
+                style={{ width: '100%', marginTop: -20,}}>
+                <View>
+                    <PageLabel text={'Liked Events'} number={likedEventsArray.length} isScrolledUp={isScrolledUp}/>
                 </View>
-            </View>
-            <ScrollView style={{ width: '100%'}}>
-                <View style={[styles.eventsContainer, { height: likedEventsArray?.length * 80 + 380}]}>
+                <View style={[styles.eventsContainer,
+                    selectedEventLikesPage
+                        ? { height: likedEventsArray?.length * 90 + 360}
+                        : { height: likedEventsArray?.length * 90 + 200}
+                ]}>
                     { likedEventsArray.length > 0
                         ?
                         [...likedEventsArray].map((event,index) => {
                             return  <EventBoxLarge
-                                key={index}
+                                key={event.eventId} //kayma ve cache sorunu çözüldü
                                 id={index +1}
                                 event={event}
                                 page={'likes'}
+                                selectedEvent={selectedEventLikesPage}
+                                setSelectedEvent={setSelectedEventLikesPage}
                             />
                         })
                         : <View style={styles.noEventContainer}>
@@ -67,40 +99,15 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.black,
         alignItems: 'center',
-        paddingTop: 50,
+        // paddingTop: 50,
     },
-    labelContainer: {
-        width: '100%',
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingHorizontal: 20,
-        marginVertical: 12,
-    },
-    labelText: {
-        color: COLORS.white,
-        fontSize: 28,
-        //fontWeight: '700',
-        fontFamily: 'RedHatBold'
-    },
-    eventNumber: {
-        width: 45,
-        height: 45,
-        backgroundColor: COLORS.gray,
-        borderRadius: 100,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    eventNumberText: {
-        fontSize: 22,
-        color: COLORS.ash,
-        fontFamily: 'RedHatBold',
-    },
+
     eventsContainer: {
         position: "relative",
         width: '100%',
         flexDirection: 'column', // Dikey olarak üst üste sıralama
-        marginTop: -70,
+        marginTop: -90,
+        // backgroundColor: 'red',
     },
     noEventContainer: {
         marginTop: 100,

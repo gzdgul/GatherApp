@@ -1,6 +1,6 @@
 import 'react-native-reanimated'
 import 'react-native-gesture-handler'
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View, Text, Pressable, Image, TouchableOpacity} from "react-native";
 import { AnimatePresence } from 'moti';
 import { View as MotiViews } from 'moti';
@@ -16,14 +16,17 @@ import EventBoxInfo from "../EventBoxInfo";
 import LikeButton from "../LikeButton";
 
 
-const EventBoxLarge = ({id, event, page}) => {
+const EventBoxLarge = ({id, event, page, selectedEvent, setSelectedEvent}) => {
     const [visible, setVisible] = React.useState(false)
-    const setSelectedEvent = useSelectedEvent((state) => state.setSelectedEvent);
-    const selectedEvent = useSelectedEvent((state) => state.selectedEvent);
+
     const [isModalVisible, setModalVisible] = React.useState(false);
     const [imageLoaded, setImageLoaded] = React.useState(false);
+    // const [selectedEvent, setSelectedEvent] = React.useState(null);
+    if (page === 'home') {}
 
+    useEffect(() => {
 
+    },[])
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };

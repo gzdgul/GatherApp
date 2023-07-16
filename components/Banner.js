@@ -17,9 +17,7 @@ const Banner = ({scrolledUp}) => {
         <MotiViews
             transition={{ delay: 100, damping: 20, mass: 0.8 }}
             animate={{
-                // backgroundColor: selectedEvent === id ? 'white' : 'green',
                 top: scrolledUp ? -70: 0,
-                // left: selectedEvent === eventId ? 40: 0,
                 // scale: scrolledUp ? 0.5: 1,
                 height: scrolledUp ? 0: 180,
                 // opacity: scrolledUp ? 0: 1
@@ -100,11 +98,11 @@ export default Banner;
 const styles = StyleSheet.create({
     banner: {
         width: '100%',
-
         borderRadius: 30,
         backgroundColor: COLORS.gray,
         justifyContent: "flex-end",
         padding: 10,
+        zIndex: 100,
     },
     label: {
         width: '100%',
