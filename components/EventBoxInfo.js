@@ -16,12 +16,30 @@ import {View as MotiViews} from "moti/build/components/view";
 import Modal from "react-native-modal";
 import EventModalImg from "./EventModal/EventModalImg";
 import EventBoxLargeInfoPin from "./EventBoxLarge/EventBoxLargeInfoPin";
+import useEvents from "../stores/useEvents";
+import {setLikedEvents} from "../firebase";
+import LikeButton from "./LikeButton";
 
 const EventBoxInfo = ({ visible, onClose, event }) => {
 
     const [isScrolledUp, setIsScrolledUp] = React.useState(false);
     const [contentOffset, setContentOffset] = React.useState(null);
     const [refreshing, setRefreshing] = React.useState(false);
+    const setLikedEventsLocal = useEvents((state) => state.setLikedEvents);
+    const likedEventsLocal = useEvents((state) => state.liked);
+
+    const handleEventLike = () => {
+        if (likedEventsLocal.includes(event.eventId)) {
+            const newArr = [...(likedEventsLocal.filter((x) => x !== event.eventId))]
+            setLikedEventsLocal(newArr);
+            setLikedEvents(newArr);
+        }else {
+            const newArr = [event.eventId, ...likedEventsLocal]
+            setLikedEventsLocal(newArr);
+            setLikedEvents(newArr);
+        }
+
+    }
 
     const onRefresh = React.useCallback(() => {
             setRefreshing(false);
@@ -100,9 +118,12 @@ const EventBoxInfo = ({ visible, onClose, event }) => {
                     Platform.OS === 'android' && <RefreshControl refreshing={refreshing} onRefresh={onRefresh} progressBackgroundColor={'black'} />
                     }
                     contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 15, paddingBottom: 10,}}>
-                        <Text style={styles.labelText}>
-                            {event.label}
-                        </Text>
+                        <View style={styles.labelContainer}>
+                            <Text style={styles.labelText}>
+                                {event.label}
+                            </Text>
+                           <LikeButton event={event}/>
+                        </View>
                          <View style={styles.contentContainer}>
                         <EventBoxLargeInfoPin text={event.day + ' GÜN'}/>
                              <Text style={[styles.text, {marginTop: 0}]}>
@@ -211,7 +232,6 @@ const styles = StyleSheet.create({
         fontFamily: 'RedHatRegular',
     },
     labelText: {
-        marginTop: 20,
         color: 'white',
         fontSize: 20,
         fontFamily: 'RedHatBold',
@@ -221,5 +241,19 @@ const styles = StyleSheet.create({
         marginTop: 20,
         alignItems: 'center',
         gap: 12,
+    },
+    labelContainer: {
+        flexDirection: 'row',
+        marginTop: 20,
+        paddingRight: 20,
+        alignItems: 'center',
+        justifyContent: "space-between",
+        gap: 12,
+    },
+    iconContainer: {
+        width: 30,
+        height: 30,
+        justifyContent: "center",
+        alignItems: "center",
     }
 });

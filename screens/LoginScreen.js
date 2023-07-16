@@ -1,14 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, TouchableOpacity, TouchableWithoutFeedback, SafeAreaView, Keyboard, TextInput, StyleSheet} from "react-native";
 import {COLORS} from "../config/constants";
 import {logInAccount} from "../firebase";
 import navigationContainer from "@react-navigation/native/src/NavigationContainer";
 import useCurrentUser from "../stores/useCurrentUser";
+import useEvents from "../stores/useEvents";
 
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const currentUser = useCurrentUser((state) => state.currentUser);
     const setCurrentUser = useCurrentUser((state) => state.setCurrentUser);
+    const setLikedEventsLocal = useEvents((state) => state.setLikedEvents);
+
+    useEffect(() => {
+        if (currentUser !== null) {
+            console.log('currentUser?.likedEvents',currentUser?.likedEvents)
+            setLikedEventsLocal(currentUser?.likedEvents)
+        } else {
+            console.log('currentUser',currentUser)
+            console.log('currentUser?.likedEvents',currentUser?.likedEvents)
+            setLikedEventsLocal([])
+        }
+    },[currentUser])
 
     const navigateSignUpScreen = () => {
         navigation.navigate('SignUp');
@@ -17,6 +31,10 @@ const LoginScreen = ({navigation}) => {
     }
     const handleLogin = async () => {
         await logInAccount(email,password, navigation, setCurrentUser);
+    }
+
+    const handleFastLogin = async () => {
+        await logInAccount('ggozde@test.com','123456', navigation, setCurrentUser);
     }
 
 
@@ -53,6 +71,12 @@ const LoginScreen = ({navigation}) => {
                                 : styles.button}
                         >
                             <Text style={styles.buttonText}>Login</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={handleFastLogin}
+                            style={styles.buttonActive}
+                        >
+                            <Text style={styles.buttonText}>FAST LOGIN</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={navigateSignUpScreen}
@@ -103,6 +127,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 17,
+        gap: 17,
     },
     button: {
         backgroundColor: COLORS.ash,
@@ -119,7 +144,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonOutline: {
-        marginTop: 5,
+        // marginTop: 5,
         borderWidth: 2,
         backgroundColor: 'transparent'
     },

@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "./screens/Home";
 import {StatusBar} from "expo-status-bar";
-import React from "react";
+import React, {useEffect} from "react";
 import Calendar from "./screens/Calendar";
 import Likes from "./screens/Likes";
 import Notifications from "./screens/Notifications";
@@ -14,6 +14,9 @@ import {COLORS} from "./config/constants";
 import * as Font from 'expo-font';
 import SignUpScreen from "./screens/SignUpScreen";
 import LoginScreen from "./screens/LoginScreen";
+import useCurrentUser from "./stores/useCurrentUser";
+import useEvents from "./stores/useEvents";
+import {getEvents} from "./firebase";
 const MainStack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 function CustomTabBarIcon({ source, focused }) {
@@ -29,8 +32,11 @@ function CustomTabBarIcon({ source, focused }) {
     );
 }
 const TabsScreen = ({route}) => {
+    const setEvents = useEvents((state) => state.setEvents);
     const windowWidth = Dimensions.get('window').width;
-
+    useEffect(() => {
+        getEvents(setEvents)
+    },[])
     return (
 
         <Tabs.Navigator

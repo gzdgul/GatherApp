@@ -10,7 +10,7 @@ const EventBoxLargeLabel = ({selectedEvent, eventId, event}) => {
             animate={{
                 // backgroundColor: selectedEvent === id ? 'white' : 'green',
                 top: selectedEvent === eventId ? 35: 0,
-                left: selectedEvent === eventId ? 50: 0,
+                left: selectedEvent === eventId ? 40: 0,
                 scale: selectedEvent === eventId ? 1: 0.95,
 
                 // blurRadius: selectedEvent === id ? 10 : 0,
@@ -33,16 +33,17 @@ const styles = StyleSheet.create({
 
     labelText: {
         color: COLORS.white,
-        fontSize: 20,
+        fontSize: 18,
+        letterSpacing: 0.5,
         fontFamily: 'RedHatBold',
-        textShadowRadius: 4,
-        textShadowColor: COLORS.black,
+        // textShadowRadius: 4,
+        // textShadowColor: COLORS.black,
         elevation: 10,
 
     },
 
     eventLabelContainer: {
-        marginVertical: 14,
-        marginHorizontal: 14,
+        // marginVertical: 20,
+        // marginHorizontal: 20,
     }
 });

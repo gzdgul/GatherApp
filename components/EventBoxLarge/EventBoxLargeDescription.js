@@ -8,7 +8,7 @@ const EventBoxLargeDescription = ({selectedEvent, eventId, event}) => {
         <MotiViews
             transition={{ delay: 10, damping: 20, mass: 0.8 }}
             animate={{
-                top: 85,
+                top: 95,
                 left: 65,
                 opacity: selectedEvent === eventId ? 0.8 : 0,
             }}

@@ -24,17 +24,7 @@ const EventModalImg = ({isScrolledUp, event}) => {
             }}
             style={styles.backgroundImgContainer}
         >
-            <InsetShadow
-                containerStyle={styles.shadowContainer}
-                shadowRadius={20}
-                //shadowOffset={50}
-                elevation={25}
-                shadowOpacity={1}
-                color="black"
-                right={true}
-                bottom={true}
 
-            >
             <Image
                 style={styles.backgroundImg}
                 resizeMode={'cover'}
@@ -43,7 +33,7 @@ const EventModalImg = ({isScrolledUp, event}) => {
                     uri: event.backgroundUrl,
                 }}
             />
-            </InsetShadow>
+
 
         </MotiViews>
         </View>

@@ -25,8 +25,8 @@ export default EventBoxLargeInfoPin;
 const styles = StyleSheet.create({
     infoPin: {
         backgroundColor: COLORS.test,
-        paddingHorizontal: 10,
-        paddingVertical: 6,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
         borderRadius: 20,
         overflow: "hidden",
     },

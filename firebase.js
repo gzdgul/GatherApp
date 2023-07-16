@@ -29,10 +29,9 @@ export const createAccount = async (name, surname, email, password, navigation, 
             name: name,
             surname: surname,
             email: email,
-            events: {
-                likedEvents: [],
-                purchasedEvents: [],
-            },
+            likedEvents: [],
+            purchasedEvents: [],
+
         });
         console.log(user);
         await getUser(user.uid, setCurrentUser)
@@ -51,7 +50,9 @@ export const logInAccount = async (email, password, navigation, setCurrentUser) 
         const user = userCredential.user;
         console.log(user);
         await getUser(user.uid, setCurrentUser)
-        navigation.navigate('Tabs');
+        setTimeout(() => {
+            navigation.navigate('Tabs');
+        },500)
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -64,4 +65,49 @@ export const getUser = async (userUID, setCurrentUser) => {
         console.log("Current data: ", doc.data());
         setCurrentUser(doc.data());
     });
+}
+
+export const addNewEvent = async (label, dateStart, dateEnd, day, price, tags, backgroundUrl, explanation) => {
+    try {
+        const eventId = new Date().getTime().toString(); // Şu anki zamanın milisaniye cinsinden değeri
+        await setDoc(doc(db, "events", eventId), {
+            eventId: eventId,
+            label: label,
+            dateStart: dateStart,
+            dateEnd: dateEnd,
+            day: day,
+            price: price,
+            tags: tags,
+            backgroundUrl: backgroundUrl,
+            explanation: explanation,
+        });
+        console.log('OK');
+    } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Alert.alert(errorCode);
+        console.log(errorMessage);
+        // ...
+    }
+}
+
+export const getEvents = async (setEvents) => {
+    try {
+        const querySnapshot = await getDocs(collection(db, "events"));
+        const events = [];
+        querySnapshot.forEach((doc) => {
+            events.push(doc.data());
+        });
+        setEvents(events);
+    } catch (error) {
+        console.error("Error getting events: ", error);
+    }
+};
+
+export const setLikedEvents = async (event) => {
+    if (auth.currentUser) {
+        const user = auth.currentUser.uid
+        const userRef = doc(db, 'users', user);
+        await updateDoc(userRef, { likedEvents: event });
+    }
 }

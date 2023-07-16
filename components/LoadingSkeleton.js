@@ -10,7 +10,7 @@ export default function LoadingSkeleton() {
     const colorMode = dark ? 'dark' : 'light';
 
     return (
-        <Pressable
+        <View
             // onPress={toggle}
             style={styles.container}>
             <MotiView
@@ -28,7 +28,7 @@ export default function LoadingSkeleton() {
                 <Spacer height={8} />
                 <Skeleton colorMode={colorMode} width={'100%'} />
             </MotiView>
-        </Pressable>
+        </View>
     );
 }
 
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     container: {
-        flex: 1,
+        // flex: 1,
+        borderRadius: 50,
         justifyContent: 'center',
     },
     padded: {

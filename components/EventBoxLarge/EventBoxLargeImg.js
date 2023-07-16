@@ -1,37 +1,36 @@
 import React from 'react';
 import InsetShadow from "react-native-inset-shadow";
-import {Image, StyleSheet} from "react-native";
+import {Image, StyleSheet, View} from "react-native";
 import {View as MotiViews} from "moti/build/components/view";
 import {COLORS} from "../../config/constants";
+import LoadingSkeleton from "../LoadingSkeleton";
 
-const EventBoxLargeImg = ({selectedEvent, eventId, event}) => {
+const EventBoxLargeImg = ({selectedEvent, eventId, event, setImageLoaded}) => {
+
+    const handleLoad = () => {
+        setImageLoaded(true);
+    };
     return (
         <MotiViews
-            transition={{ delay: 0, damping: 12, mass: 1 }}
+            transition={{ delay: 0, damping: 15, mass: 0.5 }}
             animate={{
-                opacity: selectedEvent === eventId ? 0.8 : 0.6,
-                height: selectedEvent === eventId ? 220 : 180,
-                // blurRadius: selectedEvent === id ? 10 : 0,
+                opacity: selectedEvent === eventId ? 0.9 : 0.8,
+                height: selectedEvent === eventId ? 250 : 180,
+                // blurRadius: selectedEvent === eventId ? 10 : 0,
+                backgroundColor: 'black',
             }}
 
             exitTransition={{
                 type: 'timing',
-                duration: 600,
+                duration: 300,
             }}
             style={styles.test}
         >
-            <InsetShadow
-                containerStyle={styles.shadowContainer}
-                shadowRadius={20}
-                //shadowOffset={50}
-                elevation={25}
-                shadowOpacity={1}
-                color="black"
-                right={true}
-                bottom={true}
-            >
+
                 <Image
-                    // blurRadius={2}
+                    blurRadius={20}
+                    // onProgress={handleProgress}
+                    onLoad={handleLoad}
                     // loadingIndicatorSource={<LoadingSkeleton/>}
                     style={[styles.backgroundImg,
                     ]}
@@ -39,7 +38,8 @@ const EventBoxLargeImg = ({selectedEvent, eventId, event}) => {
                         uri: event.backgroundUrl,
                     }}
                 />
-            </InsetShadow>
+
+
         </MotiViews>
     );
 };
@@ -50,26 +50,29 @@ const styles = StyleSheet.create({
 
     backgroundImg: {
         width: '100%',
-        minHeight: 220,
-        aspectRatio: 872 / 486, // Görüntünün orijinal en boy oranı
+        // minHeight: 220,
+        aspectRatio: 872 / 586, // Görüntünün orijinal en boy oranı
         resizeMode: 'cover',
-        // borderRadius: 20,
+        borderRadius: 50,
     },
     test: {
         width: '100%',
-        height: 220,
-        // backgroundColor: 'blue',
-        borderRadius: 30,
+        borderRadius: 50,
         position: "absolute",
         zIndex: -2,
+        overflow: "hidden",
+
+
     },
     shadowContainer: {
+        backgroundColor: 'black',
         // backgroundColor: 'blue',
         // position: "absolute",
         zIndex: -1,
-        borderRadius: 30,
-        borderWidth: 2,
-        borderColor: COLORS.black,
+
+        // borderWidth: 2,
+        // borderColor: COLORS.black,
     },
+
 
 });
