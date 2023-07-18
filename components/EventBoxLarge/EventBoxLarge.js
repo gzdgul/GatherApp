@@ -16,7 +16,7 @@ import EventBoxInfo from "../EventBoxInfo";
 import LikeButton from "../LikeButton";
 
 
-const EventBoxLarge = ({id, event, page, selectedEvent, setSelectedEvent}) => {
+const EventBoxLarge = ({id, event, page, selectedEvent, setSelectedEvent, navigation}) => {
     const [visible, setVisible] = React.useState(false)
 
     const [isModalVisible, setModalVisible] = React.useState(false);
@@ -91,13 +91,13 @@ const EventBoxLarge = ({id, event, page, selectedEvent, setSelectedEvent}) => {
                             <EventBoxLargeDescription selectedEvent={selectedEvent} eventId={id} event={event}/>
 
                             <View style={styles.eventInfoContainer}>
-                                <EventBoxLargeInfoPin text={event?.dateStart} event={event}/>
-                                <EventBoxLargeInfoPin text={`${event?.day} DAY`} event={event}/>
+                                <EventBoxLargeInfoPin text={event?.dateStart} event={event} textColor={'white'} backgroundColor={COLORS.test}/>
+                                <EventBoxLargeInfoPin text={`${event?.day} DAY`} event={event} textColor={'white'} backgroundColor={COLORS.test}/>
                             </View>
 
                         </MotiViews>
 
-                        <EventBoxInfo visible={isModalVisible} onClose={toggleModal} event={event} page={page}/>
+                        <EventBoxInfo visible={isModalVisible} onClose={toggleModal} event={event} page={page} navigation={navigation}/>
 
                             <MotiViews
                                 transition={{ delay: 0, damping: 12, mass: 0.5 }}

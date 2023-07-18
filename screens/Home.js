@@ -46,11 +46,11 @@ const Home = ({navigation}) => {
         const ekran20 = screenHeight * 0.2;
         // console.log(contentOffset.y)
         if (scrollPosition > 45) {
-            console.log('%50 SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
+            // console.log('%50 SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
             setIsScrolledUp(true);
         }
         if (scrollPosition <= 0) {
-            console.log('!!!!!!!! ASAGI SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
+            // console.log('!!!!!!!! ASAGI SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
             setIsScrolledUp(false);
         }
 
@@ -82,6 +82,7 @@ const Home = ({navigation}) => {
                                page={'home'}
                                selectedEvent={selectedEventHomePage}
                                setSelectedEvent={setSelectedEventHomePage}
+                               navigation={navigation}
                            />
                        })
                        : <View style={styles.noEventContainer}>

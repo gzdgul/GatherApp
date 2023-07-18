@@ -19,15 +19,17 @@ import EventBoxLargeInfoPin from "./EventBoxLarge/EventBoxLargeInfoPin";
 import useEvents from "../stores/useEvents";
 import {setLikedEvents} from "../firebase";
 import LikeButton from "./LikeButton";
+import PaymentPage from "./PaymentPage";
 
-const EventBoxInfo = ({ visible, onClose, event, page }) => {
+const EventBoxInfo = ({ visible, onClose, event, page, navigation }) => {
 
     const [isScrolledUp, setIsScrolledUp] = React.useState(false);
-    const [contentOffset, setContentOffset] = React.useState(null);
     const [refreshing, setRefreshing] = React.useState(false);
     const setLikedEventsLocal = useEvents((state) => state.setLikedEvents);
     const likedEventsLocal = useEvents((state) => state.liked);
     const [deleteAnimation, setDeleteAnimation] = React.useState(false);
+    const [isPaymentModalVisible, setPaymentModalVisible] = React.useState(false);
+
 
     useEffect(() => {
         if (deleteAnimation) {
@@ -54,12 +56,8 @@ const EventBoxInfo = ({ visible, onClose, event, page }) => {
             setIsScrolledUp(false);
     }, []);
 
-    const EventImageSticky = () => {
-        return (
-            <View>
-                {/* Yapışkan başlık bileşeni içeriği */}
-            </View>
-        );
+    const toggleModal = () => {
+        setPaymentModalVisible(!isPaymentModalVisible);
     };
 
 
@@ -121,11 +119,12 @@ const EventBoxInfo = ({ visible, onClose, event, page }) => {
                     scrollEventThrottle={16}
                     persistentScrollbar={true}
                     overScrollMode={'always'}
+                    showsVerticalScrollIndicator={false}
                     // StickyHeaderComponent={}
                     refreshControl={
                     Platform.OS === 'android' && <RefreshControl refreshing={refreshing} onRefresh={onRefresh} progressBackgroundColor={'black'} />
                     }
-                    contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 15, paddingBottom: 10,}}>
+                    contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 15, paddingBottom: 50,}}>
                         <View style={styles.labelContainer}>
                             <Text style={styles.labelText}>
                                 {event.label}
@@ -167,7 +166,7 @@ const EventBoxInfo = ({ visible, onClose, event, page }) => {
 
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => Alert.alert('Biletler Tükendi')}>
+                            onPress={toggleModal}>
                             <Text style={styles.buttonText}>Bilet Al</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -177,7 +176,9 @@ const EventBoxInfo = ({ visible, onClose, event, page }) => {
                         </TouchableOpacity>
 
                 </ScrollView>
+
             </View>
+            <PaymentPage visible={isPaymentModalVisible} onClose={toggleModal} event={event} navigation={navigation} />
         </Modal>
     );
 };
@@ -187,8 +188,9 @@ const styles = StyleSheet.create({
     container: {
         height: '80%',
         backgroundColor: COLORS.gray,
-        // paddingHorizontal: 20,
-        borderRadius: 30,
+        borderTopRightRadius: 30,
+        borderTopLeftRadius: 30,
+        // paddingBottom: 20,
     },
     button: {
         alignItems: "center",

@@ -5,7 +5,10 @@ export const COLORS = {
     gray: '#131313',
     stone: '#2f2f2f',
     ash: '#BDBDBD',
+    lightGray: '#e8e8e8',
     sBlack: '#0d0d0d',
-    test: 'rgba(0,0,0,0.52)'
+    green: '#56ff3a',
+    test: 'rgba(56,56,56,0.51)',
+    shadowColor: 'rgba(56,56,56,0.44)'
 
 }

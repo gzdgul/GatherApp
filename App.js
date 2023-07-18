@@ -17,7 +17,9 @@ import LoginScreen from "./screens/LoginScreen";
 import useCurrentUser from "./stores/useCurrentUser";
 import useEvents from "./stores/useEvents";
 import {getEvents} from "./firebase";
+import PurchaseSuccess from "./components/PurchaseSuccess";
 const MainStack = createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 function CustomTabBarIcon({ source, focused }) {
     return (
@@ -30,6 +32,14 @@ function CustomTabBarIcon({ source, focused }) {
             }}
         />
     );
+}
+const HomeScreen = ({route}) => {
+    return (
+        <HomeStack.Navigator screenOptions={{headerShown: false}}>
+            <HomeStack.Screen name="Home" component={Home}/>
+            <HomeStack.Screen name="PurchaseSuccess" component={PurchaseSuccess} options={{presentation: 'modal'}}/>
+        </HomeStack.Navigator>
+        )
 }
 const TabsScreen = ({route}) => {
     const setEvents = useEvents((state) => state.setEvents);
@@ -46,7 +56,7 @@ const TabsScreen = ({route}) => {
                 tabBarIcon: ({ focused }) => {
                     let iconSource;
 
-                    if (route.name === 'Home') {
+                    if (route.name === 'HomeScreen') {
                         iconSource = focused
                             ? require('./assets/homeIcon.png')
                             : require('./assets/homeIcon.png');
@@ -62,7 +72,7 @@ const TabsScreen = ({route}) => {
                         iconSource = focused
                             ? require('./assets/notificationsIcon.png')
                             : require('./assets/notificationsIcon.png');
-                    }else if (route.name === 'My Tickets') {
+                    }else if (route.name === 'MyTickets') {
                         iconSource = focused
                             ? require('./assets/ticketIcon.png')
                             : require('./assets/ticketIcon.png');
@@ -96,9 +106,9 @@ const TabsScreen = ({route}) => {
         >
             <Tabs.Screen name="Calendar" component={Calendar} />
             <Tabs.Screen name="Likes" component={Likes} />
-            <Tabs.Screen name="Home" component={Home}/>
+            <Tabs.Screen name="HomeScreen" component={HomeScreen}/>
             <Tabs.Screen name="Notifications" component={Notifications} />
-            <Tabs.Screen name="My Tickets" component={Tickets} />
+            <Tabs.Screen name="MyTickets" component={Tickets} />
         </Tabs.Navigator>
     );
 }
@@ -110,6 +120,7 @@ export default function App() {
         await Font.loadAsync({
             'RedHatBold': require('./assets/fonts/RedHatDisplay-Bold.ttf'),
             'RedHatRegular': require('./assets/fonts/RedHatDisplay-Regular.ttf'),
+            'RedHatLight': require('./assets/fonts/RedHatDisplay-Light.ttf'),
         });
     }
     React.useEffect(() => {

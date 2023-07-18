@@ -27,11 +27,11 @@ const Likes = () => {
         const ekran20 = screenHeight * 0.2;
         // console.log(contentOffset.y)
         if (scrollPosition > 45 && likedEventsArray.length > 3) {
-            console.log('%50 SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
+            // console.log('%50 SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
             setIsScrolledUp(true);
         }
         if (scrollPosition <= 0) {
-            console.log('!!!!!!!! ASAGI SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
+            // console.log('!!!!!!!! ASAGI SCROLLANDI !!!!!!!!!!!!!!!!!!!!!!!!')
             setIsScrolledUp(false);
         }
 
@@ -44,7 +44,7 @@ const Likes = () => {
                 return events.find((y) => y.eventId === x)
             }).filter((y) => y !== undefined) //silinmiş bir etkinlik beğenmelerde kalınca eventlerin içerisinde bulamdığı için undefined döndürüyor. onu temizliyoruz.
             setLikedEventsArray(arr)
-            console.log(arr)
+            // console.log(arr)
         }
     },[likedEventsIdArrLocal])
 
@@ -116,7 +116,8 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'column', // Dikey olarak üst üste sıralama
         marginTop: -90,
-        // backgroundColor: 'red',
+
+        backgroundColor: 'red',
     },
     noEventContainer: {
         marginTop: 100,

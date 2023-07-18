@@ -18,6 +18,7 @@ const PageLabel = ({text, number, isScrolledUp}) => {
                     marginTop:  isScrolledUp ? 0: 20,
                     borderTopRightRadius: isScrolledUp ? 0 : 30,
                     paddingVertical: isScrolledUp ? 10 : 8,
+                    opacity: isScrolledUp ? 0 : 1,
                 }}
 
                 exitTransition={{

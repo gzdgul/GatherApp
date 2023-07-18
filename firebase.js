@@ -111,3 +111,10 @@ export const setLikedEvents = async (event) => {
         await updateDoc(userRef, { likedEvents: event });
     }
 }
+export const setPurchasedEvents = async (event) => {
+    if (auth.currentUser) {
+        const user = auth.currentUser.uid
+        const userRef = doc(db, 'users', user);
+        await updateDoc(userRef, { purchasedEvents: event });
+    }
+}

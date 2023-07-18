@@ -12,7 +12,13 @@ const useSelectedEvent = create((set) => ({
         set((state) => ({
             selectedEventLikesPage: x
         }))
-    }
+    },
+    selectedEvenTicketsPage: null,
+    setSelectedEventTicketsPage: (x) => {
+        set((state) => ({
+            selectedEvenTicketsPage: x
+        }))
+    },
 }));
 
 export default useSelectedEvent;
