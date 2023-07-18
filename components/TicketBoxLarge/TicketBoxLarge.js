@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, Pressable, StyleSheet, Text, View} from "react-native";
 import {COLORS} from "../../config/constants";
 import EventBoxLargeInfoPin from "../EventBoxLarge/EventBoxLargeInfoPin";
 import TicketBoxLabel from "./TicketBoxLabel";
@@ -7,14 +7,25 @@ import TicketBoxLine from "./TicketBoxLine";
 import TicketBoxInfo from "./TicketBoxInfo";
 import {View as MotiViews} from "moti/build/components/view";
 import {LinearGradient} from "expo-linear-gradient";
+import useSelectedEvent from "../../stores/useSelectedEvent";
 
 const TicketBoxLarge = ({id, event}) => {
-    return (
+    const setSelectedEventTicketsPage = useSelectedEvent((state) => state.setSelectedEventTicketsPage);
+    const selectedEvenTicketsPage = useSelectedEvent((state) => state.selectedEvenTicketsPage);
 
+    const handlePress = () => {
+        if (selectedEvenTicketsPage === id) {
+            setSelectedEventTicketsPage(null);
+        } else setSelectedEventTicketsPage(id);
+    }
+
+    return (
+        <Pressable onPress={handlePress}>
             <MotiViews
-                transition={{ delay: 10, damping: 20, mass: 0.8 }}
+                transition={{ delay: 0, damping: 12, mass: 1 }}
                 animate={{
-                    top: 170 * id
+                    top: (selectedEvenTicketsPage && selectedEvenTicketsPage < id) ? 170 * id + 90 : 170 * id,
+                    scale: selectedEvenTicketsPage === id ? 1 : 0.95
                 }}
 
                 exitTransition={{
@@ -32,10 +43,10 @@ const TicketBoxLarge = ({id, event}) => {
                     }}
                     style={{
                         width: '100%', // img genişliği
-                        height: 45, // img yüksekliği
+                        height: 50, // img yüksekliği
                         borderRadius: 0,
                         position: 'absolute',
-                        bottom: 0,
+                        bottom: -5, //animasyondaki white line bug çözüldü
                     }}
                 />
                 <LinearGradient
@@ -44,10 +55,10 @@ const TicketBoxLarge = ({id, event}) => {
                     start={{ x: 0.6, y: 0 }}
                     end={{ x: 1, y: 1 }}
                     pointerEvents="none" // LinearGradient'in tıklanabilirliğini devre dışı bırakıyoruz.
-
                 >
                 </LinearGradient>
             </MotiViews>
+        </Pressable>
 
 
     );

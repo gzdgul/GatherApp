@@ -116,8 +116,6 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'column', // Dikey olarak üst üste sıralama
         marginTop: -90,
-
-        backgroundColor: 'red',
     },
     noEventContainer: {
         marginTop: 100,

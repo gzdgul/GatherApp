@@ -8,7 +8,7 @@ export const COLORS = {
     lightGray: '#e8e8e8',
     sBlack: '#0d0d0d',
     green: '#56ff3a',
-    test: 'rgba(56,56,56,0.51)',
-    shadowColor: 'rgba(56,56,56,0.44)'
+    test: 'rgba(56,56,56,0.5)',
+    shadowColor: 'rgba(56,56,56,0.4)'
 
 }

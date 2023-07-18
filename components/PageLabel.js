@@ -5,20 +5,33 @@ import {View as MotiViews} from "moti/build/components/view";
 
 const PageLabel = ({text, number, isScrolledUp}) => {
     return (
-        <View  style={styles.labelContainer}>
+        <MotiViews
+            transition={{ delay: 0, damping: 20, mass: 0.8 }}
+            animate={{
+                top: isScrolledUp ? -100: 0,
+                paddingVertical:  isScrolledUp ? 0 : 20,
+                // scale: isScrolledUp ? 0 : 1
+                opacity: isScrolledUp ? 0 : 1,
+            }}
+
+            exitTransition={{
+                type: 'timing',
+                duration: 150,
+            }}
+            style={styles.labelContainer}>
             <MotiViews
                 transition={{ delay: 10, damping: 20, mass: 0.8 }}
                 animate={{
-                    top: isScrolledUp ? -35: 0,
-                    left: isScrolledUp ? -30: 0,
-                    scale: isScrolledUp ? 0.8: 1,
-                    paddingRight: isScrolledUp ? 25: 16,
-                    paddingLeft: isScrolledUp ? 20: 20,
-                    paddingTop: isScrolledUp ? 60: 10,
-                    marginTop:  isScrolledUp ? 0: 20,
-                    borderTopRightRadius: isScrolledUp ? 0 : 30,
-                    paddingVertical: isScrolledUp ? 10 : 8,
-                    opacity: isScrolledUp ? 0 : 1,
+                    top:  0,
+                    left:  0,
+                    scale:  1,
+                    paddingRight: 16,
+                    paddingLeft:  20,
+                    paddingTop: 10,
+                    marginTop:  20,
+                    borderTopRightRadius:  30,
+                    paddingVertical:  8,
+                    // opacity: isScrolledUp ? 0 : 1,
                 }}
 
                 exitTransition={{
@@ -55,7 +68,7 @@ const PageLabel = ({text, number, isScrolledUp}) => {
                 <Text style={styles.eventNumberText}>{number}</Text>
             </MotiViews>
 
-        </View>
+        </MotiViews>
 
     );
 };
@@ -70,7 +83,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         // paddingHorizontal: 20,
-        paddingVertical: 20,
+        // paddingVertical: 20,
         // marginTop: 20,
         // backgroundColor: 'yellow',
     },
